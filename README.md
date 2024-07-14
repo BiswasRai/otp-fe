@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+# Frontend OTP Verification Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a frontend application built with React and Vite. It includes an OTP (One-Time Password) component that verifies user input. If the OTP verification is successful, the user is redirected to the `/success` route. If the OTP value `123456` is entered, the server will intentionally fail the verification, which is by design for testing purposes.
 
-Currently, two official plugins are available:
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/BiswasRai/otp-fe
+   Implementation Details
+   OTP Verification
+   The OTP verification component checks the length and format of the input. If the OTP matches the correct criteria and is not 123456, it proceeds with verification. If 123456 is entered, the server simulation fails the verification.
+   ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Redirect on Success
+If the OTP is successfully verified, the user is redirected to the /success route where a success message is displayed.
 
-## Expanding the ESLint configuration
+Simulated Server Failure
+For testing purposes, if the OTP 123456 is entered, the server will intentionally fail the verification. This is useful for testing error handling and user feedback.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Local Storage Utilities
+The project includes utility functions for storing and retrieving values from localStorage, which can be used to manage user authentication states or other persistent data.
 
-- Configure the top-level `parserOptions` property like this:
+Running Locally
+To run the project locally, follow the Installation steps above. Then, start the development server with:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+sh
+Copy code
+npm run dev
+The application will be accessible at http://localhost:5173.
