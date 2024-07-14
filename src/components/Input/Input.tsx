@@ -16,6 +16,7 @@ type InputProps = {
   autoFocus?: boolean;
   className?: string;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 /**
@@ -43,6 +44,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       autoFocus = false,
       className,
       placeholder,
+      disabled,
     },
     ref
   ) => {
@@ -52,6 +54,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           placeholder={placeholder || "-"}
           type={type}
           name={name}
+          disabled={disabled}
           aria-label={ariaLabel || label}
           maxLength={maxLength || 1}
           autoFocus={autoFocus}

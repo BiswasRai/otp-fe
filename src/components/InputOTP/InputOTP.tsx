@@ -1,16 +1,23 @@
 import Input from "../Input/Input";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { KEYBOARD_KEY } from "../../constants/keyboardEvent";
-// TODO: absolute import in vite
-// Need to only accept number as a value/input
+import { REQUIRED_OTP_LENGTH } from "../../constants/magicNumber";
+
 type InputProps = {
   length?: number;
-  onChange: (pin: number) => void;
+  onChange: (otp: string) => void;
   isError?: string;
   setError: any;
+  isDisabled?: boolean;
 };
 
-const InputOTP = ({ length = 4, isError, setError, onChange }: InputProps) => {
+const InputOTP = ({
+  length = REQUIRED_OTP_LENGTH,
+  isError,
+  setError,
+  isDisabled,
+  onChange,
+}: InputProps) => {
   const inputRef = useRef<HTMLInputElement[]>(Array(length).fill(null));
   const [OTP, setOTP] = useState<string[]>(Array(length).fill(""));
 
@@ -25,25 +32,25 @@ const InputOTP = ({ length = 4, isError, setError, onChange }: InputProps) => {
     inputRef.current[index].focus();
   };
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const input = event.target.value;
-    const newPin = [...OTP];
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      let input = event.target.value;
 
-    newPin[index] = input;
-    setOTP(newPin);
+      const newPin = [...OTP];
 
-    if (input.length === 1 && index < length - 1) {
-      handleFocusIndex(event, index + 1);
-    }
-    if (input.length === 0 && index > 0) {
-      handleFocusIndex(event, index - 1);
-    }
+      newPin[index] = input;
+      setOTP(newPin);
+      if (input.length === 1 && index < length - 1) {
+        handleFocusIndex(event, index + 1);
+      }
+      if (input.length === 0 && index > 0) {
+        handleFocusIndex(event, index - 1);
+      }
 
-    onChange(+newPin.join(""));
-  };
+      onChange(newPin.join(""));
+    },
+    [OTP]
+  );
 
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -90,6 +97,7 @@ const InputOTP = ({ length = 4, isError, setError, onChange }: InputProps) => {
           <Input
             onPaste={(e) => handlePaste(e)}
             ariaLabel="input OTP"
+            disabled={isDisabled}
             placeholder="-"
             autoFocus={index === 0}
             name="inputOTP"

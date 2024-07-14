@@ -1,1 +1,3 @@
-import "./InputOTP";
+import InputOTP from "./InputOTP";
+
+export { InputOTP };
