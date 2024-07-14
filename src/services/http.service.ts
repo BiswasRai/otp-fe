@@ -8,5 +8,10 @@ export const postData = async (url = "", data = {}) => {
   });
 
   const jsonResponse = await response.json();
+
+  if (!response.ok) {
+    throw new Error(jsonResponse?.message || "Something went wrong");
+  }
+
   return jsonResponse;
 };
